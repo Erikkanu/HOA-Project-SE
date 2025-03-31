@@ -1,0 +1,79 @@
+﻿@page
+@model HOA.Views.Home.IndexModel
+
+
+@{
+    //ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "HOA - Homepage";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - HOA Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/site.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Dashboard</h1>
+        <p>Welcome to your HOA management system</p>
+    </header>
+    <!-- Main Dashboard Content -->
+    <main class="container">
+        <div class="row g-4">
+            <!-- Quick Stats Cards -->
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Residents</h5>
+                        <p class="card-text display-6">150</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Dues Collected</h5>
+                        <p class="card-text display-6">$75,000</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Upcoming Events</h5>
+                        <p class="card-text display-6">3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Announcements Preview -->
+        <div class="row mt-5">
+            <div class="col">
+                <h2>Recent Announcements</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>Board Meeting:</strong> Scheduled for March 15th at 7 PM.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Pool Maintenance:</strong> Pool closed for cleaning on March 10th.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Annual Dues Reminder:</strong> Due by March 31st.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Spring Block Party:</strong> Join us on April 20th for food, fun, and games!
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

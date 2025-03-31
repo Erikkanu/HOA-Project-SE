@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HOA</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HOA.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <!-- Responsive Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="/">HOA Manager</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Residents">Residents</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Payments">Payments</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Maintenance">Maintenance</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Events">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Announcements">Announcements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Login">Log In</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex-grow-1">
+        @RenderBody()
+    </div>
+
+
+
+    <footer class="bg-light text-dark py-3">
+        <div class="container">
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2025 HOA Management. All rights reserved.</p>
+            </div>
+            </hr>
+        </div>
+    </footer>
+
+
+
+
+    @* <!-- Footer that appears at the end of content --> *@
+    @* <footer class="footer py-3 bg-light mt-4"> *@
+    @*     <div class="container text-center"> *@
+    @*         <span>&copy; 2025 HOA Management. All rights reserved.</span> *@
+    @*     </div> *@
+    @* </footer> *@
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+    
+@* <style> *@
+@*     /* Ensure full height layout */ *@
+@*     html, body { *@
+@*         width: 100%; *@
+@*         margin: 0; *@
+@*         display: flex; *@
+@*         flex-direction: column; *@
+@*     } *@
+
+@*     /* Main content wrapper expands to fill space */ *@
+@*     .content-wrapper { *@
+@*         flex: 1; /* Pushes footer down */ *@
+@*         padding-top: 70px; /* Adjust based on navbar height */ *@
+@*         padding-bottom: 60px; /* Adjust based on footer height */ *@
+@*     } *@
+
+@*     /* Fixed navbar at the top */ *@
+@*     .navbar { *@
+@*         position: fixed; *@
+@*         top: 0; *@
+@*         width: 100%; *@
+@*         z-index: 1000; *@
+@*         background-color: #343a40; *@
+@*     } *@
+
+@*     /* Footer sticks to the bottom if content is short, otherwise it scrolls */ *@
+@*     .footer { *@
+@*         background-color: #3f51b5; *@
+@*         text-align: center; *@
+@*         padding: 10px; *@
+@*         width: 100%; *@
+@*         border-style: solid; *@
+@*         bottom: 0; *@
+@*         position: fixed; *@
+@*         font-size: 0.9rem; *@
+@*         color: #ffffff; *@
+@*     } *@
+
+@* </style> *@
