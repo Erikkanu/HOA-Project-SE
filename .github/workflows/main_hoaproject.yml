@@ -27,7 +27,7 @@ jobs:
         run: dotnet build HOA --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish HOA/HOA.csproj -c Release -o ${{env.DOTNET_ROOT}}/HOA
+        run: dotnet publish HOA -c Release -o ${{env.DOTNET_ROOT}}/HOA
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
