@@ -1083,7 +1083,7 @@ $.extend( $.validator, {
 			}
 
 			// Always apply ignore filter
-			return $( element ).not( this.settings.ignore )[ 0 ];
+			return $( this.currentForm ).find( element ).not( this.settings.ignore )[ 0 ];
 		},
 
 		checkable: function( element ) {
@@ -1091,7 +1091,7 @@ $.extend( $.validator, {
 		},
 
 		findByName: function( name ) {
-			return $( this.currentForm ).find( "[name='" + this.escapeCssMeta( name ) + "']" );
+			return this.currentForm.querySelectorAll( "[name='" + this.escapeCssMeta( name ) + "']" );
 		},
 
 		getLength: function( value, element ) {
