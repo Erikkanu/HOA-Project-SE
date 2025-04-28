@@ -5,66 +5,65 @@ using HOA.Services.Interfaces;
 
 namespace HOA.Controllers
 {
-    public class AnnouncementsController : Controller
+    public class MaintenancesController : Controller
     {
-        private IAnnouncementsService _announcementsService;
+        private IMaintenanceService _maintenanceService;
 
-
-        public AnnouncementsController(IAnnouncementsService announcementsService)
+        public MaintenancesController(IMaintenanceService maintenanceService)
         {
-            _announcementsService = announcementsService;
+            _maintenanceService = maintenanceService;
         }
 
-        // GET: Announcements
+        // GET: Maintenances
         public IActionResult Index(string searchQuery)
         {
             ViewData["SearchQuery"] = searchQuery;
-            var announcements = string.IsNullOrEmpty(searchQuery)
-                ? _announcementsService.GetAllAnnouncements()
-                : _announcementsService.SearchAnnouncementsByTitle(searchQuery);
-            return View(announcements);
+            var maintenances = string.IsNullOrEmpty(searchQuery)
+                ? _maintenanceService.GetAllMaintenance()
+                : _maintenanceService.SearchMaintenanceByTaskName(searchQuery);
+            return View(maintenances);
         }
 
-        // GET: Announcements/Details/5
-        public IActionResult Details(int? id)
+        // GET: Maintenances/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var announcement = _announcementsService.GetAnnouncementsById((int)id);
+            var maintenance = _maintenanceService.GetMaintenanceById((int)id);
 
-            if (announcement == null)
+            if (maintenance == null)
             {
                 return NotFound();
             }
 
-            return View(announcement);
+            return View(maintenance);
         }
 
-        // GET: Announcements/Create
+        // GET: Maintenances/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Announcements/Create
+        // POST: Maintenances/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Title,Description,Date")] Announcement announcement)
+        public IActionResult Create([Bind("Id,TaskName,AssignedPersonnel,DueDate,Status")] Maintenance maintenance)
         {
             if (ModelState.IsValid)
             {
-                _announcementsService.AddAnnouncement(announcement);
+                _maintenanceService.AddMaintenance(maintenance);
                 return RedirectToAction(nameof(Index));
             }
-            return View(announcement);
+            return View(maintenance);
         }
 
-        // GET: Announcements/Edit/5
+        // GET: Maintenances/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -72,23 +71,23 @@ namespace HOA.Controllers
                 return NotFound();
             }
 
-            var announcement = _announcementsService.GetAnnouncementsById((int)id);
+            var maintenance = _maintenanceService.GetMaintenanceById((int)id);
             
-            if (announcement == null)
+            if (maintenance == null)
             {
                 return NotFound();
             }
-            return View(announcement);
+            return View(maintenance);
         }
 
-        // POST: Announcements/Edit/5
+        // POST: Maintenances/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,TaskName,AssignedPersonnel,Date")] Announcement announcement)
+        public IActionResult Edit(int id, [Bind("Id,TaskName,AssignedPersonnel,DueDate,Status")] Maintenance maintenance)
         {
-            if (id != announcement.Id)
+            if (id != maintenance.Id)
             {
                 return NotFound();
             }
@@ -97,11 +96,11 @@ namespace HOA.Controllers
             {
                 try
                 {
-                    _announcementsService.UpdateAnnouncement(announcement);
+                    _maintenanceService.UpdateMaintenance(maintenance);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AnnouncementExists(announcement.Id))
+                    if (!MaintenanceExists(maintenance.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +111,10 @@ namespace HOA.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(announcement);
+            return View(maintenance);
         }
 
-        // GET: Announcements/Delete/5
+        // GET: Maintenances/Delete/5
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -123,33 +122,34 @@ namespace HOA.Controllers
                 return NotFound();
             }
 
-            var announcement = _announcementsService.GetAnnouncementsById((int)id);
-
-            if (announcement == null)
+            var maintenance = _maintenanceService.GetMaintenanceById((int)id);
+            
+            if (maintenance == null)
             {
                 return NotFound();
             }
 
-            return View(announcement);
+            return View(maintenance);
         }
 
-        // POST: Announcements/Delete/5
+        // POST: Maintenances/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var announcement = _announcementsService.GetAnnouncementsById(id);
-            if (announcement != null)
+            var maintenance = _maintenanceService.GetMaintenanceById(id);
+            
+            if (maintenance != null)
             {
-                _announcementsService.DeleteAnnouncement(id);
+                _maintenanceService.DeleteMaintenance(id);
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AnnouncementExists(int id)
+        private bool MaintenanceExists(int id)
         {
-            return _announcementsService.GetAnnouncementsById(id) != null;
+            return _maintenanceService.GetMaintenanceById(id) != null;
         }
     }
 }
