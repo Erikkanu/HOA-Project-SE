@@ -1,46 +1,25 @@
 using System.Diagnostics;
-using HOA.Models;
 using Microsoft.AspNetCore.Mvc;
+using HOA.Models;
 
-namespace HOA.Controllers
+namespace HOA.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+
+    public IActionResult Index()
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly HOADbContext _context;
+        return View();
+    }
 
-        public HomeController(ILogger<HomeController> logger, HOADbContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        public IActionResult Index()
-        {
-            return View(_context.Residents);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult AddResident()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AddResident(Resident resident)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Residents.Add(resident);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(resident);
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
