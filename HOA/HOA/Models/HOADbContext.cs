@@ -16,7 +16,7 @@ namespace HOA.Models
 
         public DbSet<Event> Events { get; set; } = default!;    
 
-        public DbSet<Maintenance> Maintenance { get; set; } = default!;
+        public DbSet<Maintenance> Maintenances { get; set; } = default!;
 
         public DbSet<Announcement> Announcements { get; set; } = default!;
 
