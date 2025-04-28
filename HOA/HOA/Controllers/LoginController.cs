@@ -15,7 +15,7 @@ namespace HOA.Controllers
         }
         public IActionResult Index()
         {
-            return View(dbContext.Login.ToList());
+            return View(dbContext.Users.ToList());
         }
     }
 }
