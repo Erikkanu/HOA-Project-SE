@@ -1,31 +1,11 @@
 using HOA.Models;
-using HOA.Repositories;
-using HOA.Repositories.Interfaces;
-using HOA.Services;
-using HOA.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddDbContext<HOADbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<IResidentsService, ResidentsService>();
-builder.Services.AddScoped<IPaymentsService, PaymentsService>();
-builder.Services.AddScoped<IMaintenanceService, MaintenanceService>();
-builder.Services.AddScoped<IAnnouncementsService, AnnouncementsService>();
-
-
-builder.Services.AddScoped<IResidentsRepository, ResidentsRepository>();
-builder.Services.AddScoped<IPaymentsRepository, PaymentsRepository>();
-builder.Services.AddScoped<IMaintenanceRepository, MaintenanceRepository>();
-builder.Services.AddScoped<IAnnouncementsRepository, AnnouncementsRepository>();
-
-
-builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+builder.Services.AddDbContext<HOADbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("HOADbContext")));
 
 var app = builder.Build();
 
@@ -38,15 +18,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapStaticAssets();
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}")
+    .WithStaticAssets();
+
 
 app.Run();
