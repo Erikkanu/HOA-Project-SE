@@ -4,8 +4,8 @@
     {
         IResidentsRepository ResidentsRepository { get; }
         IPaymentsRepository PaymentsRepository { get; }
-        IMaintenanceRepository MaintenanceRepository { get; }
-        IAnnouncementsRepository AnnouncementsRepository { get; }
+        //IMaintenanceRepository MaintenanceRepository { get; }
+        //IAnnouncementsRepository AnnouncementsRepository { get; }
 
         void Save();
     }

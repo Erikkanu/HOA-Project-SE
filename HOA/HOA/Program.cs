@@ -15,14 +15,10 @@ builder.Services.AddDbContext<HOADbContext>(options =>
 
 builder.Services.AddScoped<IResidentsService, ResidentsService>();
 builder.Services.AddScoped<IPaymentsService, PaymentsService>();
-builder.Services.AddScoped<IMaintenanceService, MaintenanceService>();
-builder.Services.AddScoped<IAnnouncementsService, AnnouncementsService>();
 
 
 builder.Services.AddScoped<IResidentsRepository, ResidentsRepository>();
 builder.Services.AddScoped<IPaymentsRepository, PaymentsRepository>();
-builder.Services.AddScoped<IMaintenanceRepository, MaintenanceRepository>();
-builder.Services.AddScoped<IAnnouncementsRepository, AnnouncementsRepository>();
 
 
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
