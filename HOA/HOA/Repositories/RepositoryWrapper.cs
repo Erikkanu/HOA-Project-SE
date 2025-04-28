@@ -8,6 +8,8 @@ namespace HOA.Repositories
         private readonly HOADbContext _context;
         private IResidentsRepository _residents;
         private IPaymentsRepository _payments;
+        private IMaintenanceRepository _maintenance;
+        private IAnnouncementsRepository _announcements;
 
         public RepositoryWrapper(HOADbContext context)
         {
@@ -37,6 +39,31 @@ namespace HOA.Repositories
                 return _payments;
             }
         }
+
+        public IMaintenanceRepository MaintenanceRepository
+        {
+            get
+            {
+                if (_maintenance == null)
+                {
+                    _maintenance = new MaintenanceRepository(_context);
+                }
+                return _maintenance;
+            }
+        }
+
+        public IAnnouncementsRepository AnnouncementsRepository
+        {
+            get
+            {
+                if (_announcements == null)
+                {
+                    _announcements = new AnnouncementsRepository(_context);
+                }
+                return _announcements;
+            }
+        }
+
 
         public void Save()
         {
