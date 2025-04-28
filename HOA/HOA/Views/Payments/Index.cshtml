@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@model IEnumerable<HOA.Models.Payment>
+﻿@model IEnumerable<HOA.Models.Payment>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,15 +32,13 @@
 
         <!-- Search and Add Payment -->
         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-            <div class="input-group w-50">
-                <input type="text" class="form-control" placeholder="Search by resident name...">
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-search"></i> Search
-                </button>
-            </div>
-            <button class="btn btn-primary mt-2 mt-md-0">
-                <i class="bi bi-plus-circle"></i> Add Payment
-            </button>
+
+            <form method="get" asp-action="Index" class="input-group w-50">
+                <input type="text" name="searchQuery" class="form-control" placeholder="Search by resident name..." value="@ViewData["SearchQuery"]" />
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+
+            <a class="btn btn-primary mt-2 mt-md-0" asp-action="Create">Add Payment</a>
         </div>
 
         <!-- Payments Table -->
@@ -81,11 +75,12 @@
                                     };
                                 }
                                 <span class="badge @badgeClass">@Html.DisplayFor(modelItem => item.Status)</span>
-                            </td> <!-- status: Paid, Overdue, Panding -->
+                            </td> <!-- status: Paid, Overdue, Pending -->
                
                             <td class="text-center">
-                                <button class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i> Edit</button>
-                                <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
+                                <a class="bi bi-pencil-square btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a class="bi-card-list btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a class="bi bi-trash btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                             </td>
                             
                         </tr>
