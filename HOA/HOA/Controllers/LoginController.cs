@@ -1,21 +1,83 @@
-﻿using HOA.Models;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.Entity;
-using Microsoft.EntityFrameworkCore;
 
 namespace HOA.Controllers
 {
     public class LoginController : Controller
     {
-            private readonly HOADbContext dbContext;
+        // GET: LoginController
+        public ActionResult Index()
+        {
+            return View();
+        }
 
-            public LoginController(HOADbContext dbContext)
+        // GET: LoginController/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: LoginController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: LoginController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
+            try
             {
-                this.dbContext = dbContext;
+                return RedirectToAction(nameof(Index));
             }
-            public IActionResult Index()
+            catch
             {
-                return View(dbContext.Login.ToList());
+                return View();
             }
+        }
+
+        // GET: LoginController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: LoginController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: LoginController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: LoginController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

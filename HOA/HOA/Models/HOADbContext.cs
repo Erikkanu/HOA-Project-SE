@@ -1,19 +1,25 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using HOA.Models;
 
 namespace HOA.Models
 {
     public class HOADbContext : DbContext
     {
-        public HOADbContext(DbContextOptions<HOADbContext> options): base(options) { }
+        public HOADbContext(DbContextOptions<HOADbContext> options)
+            : base(options)
+        {
+        }
 
-        //public DbSet<Dashboard> Dashboard { get; set; }
-        public DbSet<Residents> Residents { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Maintenance> Maintenance { get; set; }
-        public DbSet<Events> Events { get; set; }
-        public DbSet<Announcements> Announcements { get; set; }
-        public DbSet<Login> Login { get; set; }
+        public DbSet<Resident> Residents { get; set; } = default!;
 
+        public DbSet<Payment> Payments { get; set; } = default!;
+
+        public DbSet<Event> Events { get; set; } = default!;    
+
+        public DbSet<Maintenance> Maintenances { get; set; } = default!;
+
+        public DbSet<Announcement> Announcements { get; set; } = default!;
+
+        public DbSet<User> Users { get; set; } = default!;
     }
 }
