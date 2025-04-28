@@ -17,6 +17,6 @@ namespace HOA.Controllers
         {
             return View(dbContext.Events.ToList());
         }
-      
+
     }
 }

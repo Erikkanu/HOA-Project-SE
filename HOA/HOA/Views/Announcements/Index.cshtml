@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@model IEnumerable<HOA.Models.Announcements>
+﻿@model IEnumerable<HOA.Models.Announcement>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,150 +14,59 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/site.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
-  
-
-    <!-- Page Header -->
+     <!-- Page Header -->
     <header class="page-header">
         <h1>Announcements</h1>
         <p>Stay up to date with the latest news and important updates from your HOA</p>
     </header>
 
+
     <!-- Main Content -->
     <div class="container my-4">
 
-        <!-- Search and Add Announcement -->
+        <!-- Search and Add Payment -->
         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-            <div class="input-group w-50">
-                <input type="text" class="form-control" placeholder="Search announcements...">
-                <button class="btn btn-outline-secondary" type="button">Search</button>
-            </div>
-            <button class="btn btn-primary mt-2 mt-md-0">
-                <i class="bi bi-plus-circle"></i> New Announcement
-            </button>
+
+            <form method="get" asp-action="Index" class="input-group w-50">
+                <input type="text" name="searchQuery" class="form-control" placeholder="Search by title..." value="@ViewData["SearchQuery"]" />
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+
+            <a class="btn btn-primary mt-2 mt-md-0" asp-action="Create">Add new announcement</a>
         </div>
 
         <!-- Announcements List -->
         <div class="row g-4">
 
-            <!-- Announcement Card 1 -->
-            <div class="col-md-6">
-                <div class="card announcement-card announcement-bg-1">
-                    <div class="card-body">
-                        <h5 class="card-title">Annual HOA Meeting Scheduled</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Posted on March 5, 2025</h6>
-                        <p class="card-text">The Annual HOA Meeting will take place on April 20th, 2025 at 6:00 PM in the Community Center. All residents are encouraged to attend as we will discuss budgets, upcoming projects, and community concerns.</p>
-                        <a href="#" class="card-link">Read more</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Announcement Card 2 -->
-            <div class="col-md-6">
-                <div class="card announcement-card announcement-bg-2">
-                    <div class="card-body">
-                        <h5 class="card-title">Pool Maintenance Notice</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Posted on March 8, 2025</h6>
-                        <p class="card-text">Please be advised that the community pool will be closed for routine maintenance from March 15th to March 18th. We appreciate your understanding and cooperation.</p>
-                        <a href="#" class="card-link">Read more</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Announcement Card 3 -->
-            <div class="col-md-6">
-                <div class="card announcement-card announcement-bg-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Landscaping Project Update</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Posted on March 10, 2025</h6>
-                        <p class="card-text">Phase 2 of the landscaping improvement project is underway. We expect completion by the end of the month. Thank you for your patience as we enhance our green spaces.</p>
-                        <a href="#" class="card-link">Read more</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Announcement Card 4 -->
-            <div class="col-md-6">
-                <div class="card announcement-card announcement-bg-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Security Patrol Hours Extended</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Posted on March 12, 2025</h6>
-                        <p class="card-text">To improve community safety, we’ve extended security patrol hours from 6:00 PM to 6:00 AM. Please report any concerns to the HOA office immediately.</p>
-                        <a href="#" class="card-link">Read more</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
+            <!-- All Announcement Cards -->
     
+            <div class="row g-4">
+                @foreach (var announcement in Model)
+                {
+                <!-- Use modulo operation to cycle through background classes -->
+                <div class="col-md-6">
+                    <div class="card announcement-card announcement-bg-@(announcement.Id % 4 + 1)">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => announcement.Title)</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Posted on @announcement.Date</h6>
+                            <p class="card-text">@Html.DisplayFor(modelItem => announcement.Description)</p>
+                            <a class="bi bi-pencil-square btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@announcement.Id">Edit</a> |
+                            <a class="bi-card-list btn-sm btn-info" asp-action="Details" asp-route-id="@announcement.Id">Details</a> |
+                            <a class="bi bi-trash btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@announcement.Id">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
-@* <style> *@
-
-@*     /*Announcements Page */ *@
-@*     .announcement-card { *@
-@*         background-color: #f9f9f9; *@
-@*         border: 1px solid #e0e0e0; *@
-@*         border-radius: 12px; *@
-@*         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); *@
-@*         transition: transform 0.2s, box-shadow 0.2s; *@
-@*     } *@
-
-@*         .announcement-card:hover { *@
-@*             transform: translateY(-5px); *@
-@*             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); *@
-@*         } *@
-
-@*         .announcement-card .card-title { *@
-@*             color: #333333; *@
-@*             font-weight: 600; *@
-@*         } *@
-
-@*         .announcement-card .card-subtitle { *@
-@*             font-size: 0.9rem; *@
-@*         } *@
-
-@*         .announcement-card .card-text { *@
-@*             color: #555555; *@
-@*         } *@
-
-@*         .announcement-card .card-link { *@
-@*             color: #007BFF; *@
-@*             text-decoration: none; *@
-@*         } *@
-
-@*             .announcement-card .card-link:hover { *@
-@*                 text-decoration: underline; *@
-@*             } *@
-
-@*     /* Different background colors for each announcement */ *@
-@*     .announcement-bg-1 { *@
-@*         background-color: #e3f2fd; /* Pale Blue */ *@
-@*         border-color: #bbdefb; *@
-@*     } *@
-
-@*     .announcement-bg-2 { *@
-@*         background-color: #fff3e0; /* Pale Orange */ *@
-@*         border-color: #ffe0b2; *@
-@*     } *@
-
-@*     .announcement-bg-3 { *@
-@*         background-color: #f1f8e9; /* Pale Green */ *@
-@*         border-color: #c8e6c9; *@
-@*     } *@
-
-@*     .announcement-bg-4 { *@
-@*         background-color: #fce4ec; /* Pale Pink */ *@
-@*         border-color: #f8bbd0; *@
-@*     } *@
-
-@* </style> *@

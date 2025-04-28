@@ -1,13 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@model IEnumerable<HOA.Models.Residents>
+﻿@model IEnumerable<HOA.Models.Resident>
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "HOA - Residents";
+    ViewData["Title"] = "Index";
 }
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/site.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -32,13 +29,12 @@
 
         <!-- Search and Add Resident -->
         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-            <div class="input-group w-50">
-                <input type="text" class="form-control" placeholder="Search residents...">
-                <button class="btn btn-outline-secondary" type="button">Search</button>
-            </div>
-            <button class="btn btn-primary mt-2 mt-md-0">
-                <i class="bi bi-person-plus"></i> Add Resident
-            </button>
+            <form method="get" asp-action="Index" class="input-group w-50">
+                <input type="text" name="searchQuery" class="form-control" placeholder="Search residents..." value="@ViewData["SearchQuery"]" />
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+
+            <a class="btn btn-primary mt-2 mt-md-0" asp-action="Create">Add new resident</a>
         </div>
 
         <!-- Residents Table -->
@@ -74,13 +70,16 @@
                                     };
                                 }
                                 <span class="badge @badgeClass">@Html.DisplayFor(modelItem => item.Status)</span>
-                            </td> 
+                            </td>
+
                             <!-- status: In Progress, Completed, Delayed -->
                             <td class="text-center">
-                                <button class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i> Edit</button>
-                                <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
+
+                                <a class="bi bi-pencil-square btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a class="bi-card-list btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a class="bi bi-trash btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
                             </td>
-                            <!-- to do - modify status in functie de status -->
                         </tr>
                     }
 
@@ -95,12 +94,3 @@
 </body>
 
 </html>
-
-@* <style> *@
-@*     .page-header { *@
-@*         padding: 40px 20px; *@
-@*         background-color: #e3f2fd; *@
-@*         color: #333; *@
-@*         text-align: center; *@
-@*     } *@
-@* </style> *@

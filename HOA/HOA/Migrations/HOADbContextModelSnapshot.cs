@@ -17,12 +17,12 @@ namespace HOA.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HOA.Models.Announcements", b =>
+            modelBuilder.Entity("HOA.Models.Announcement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,8 +30,9 @@ namespace HOA.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -46,7 +47,7 @@ namespace HOA.Migrations
                     b.ToTable("Announcements");
                 });
 
-            modelBuilder.Entity("HOA.Models.Events", b =>
+            modelBuilder.Entity("HOA.Models.Event", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,31 +83,6 @@ namespace HOA.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("HOA.Models.Login", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Login");
-                });
-
             modelBuilder.Entity("HOA.Models.Maintenance", b =>
                 {
                     b.Property<int>("Id")
@@ -132,7 +108,7 @@ namespace HOA.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Maintenance");
+                    b.ToTable("Maintenances");
                 });
 
             modelBuilder.Entity("HOA.Models.Payment", b =>
@@ -165,7 +141,7 @@ namespace HOA.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("HOA.Models.Residents", b =>
+            modelBuilder.Entity("HOA.Models.Resident", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -196,6 +172,31 @@ namespace HOA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Residents");
+                });
+
+            modelBuilder.Entity("HOA.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
