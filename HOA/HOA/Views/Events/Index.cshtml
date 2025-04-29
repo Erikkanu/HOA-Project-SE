@@ -26,13 +26,27 @@
         <p>Join our community events and stay connected!</p>
     </header>
 
-    <div class="d-flex justify-content-center my-3">
-        <a class="btn btn-primary" asp-action="Create">Add new Event</a>
-    </div>
+   
+    @* <div class="d-flex justify-content-center my-3"> *@
+    @*     <a class="btn btn-primary" asp-action="Create">Add new Event</a> *@
+    @* </div> *@
+    
 
     <!-- Main Content -->
     <!-- Events Section -->
     <div class="container my-5">
+
+
+        <!-- Search and Add Events -->
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+
+            <form method="get" asp-action="Index" class="input-group w-50">
+                <input type="text" name="searchQuery" class="form-control" placeholder="Search by name..." value="@ViewData["SearchQuery"]" />
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+
+            <a class="btn btn-primary mt-2 mt-md-0" asp-action="Create">Add new event</a>
+        </div>
 
         <div class="row g-4">
 

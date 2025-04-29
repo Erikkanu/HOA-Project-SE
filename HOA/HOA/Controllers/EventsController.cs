@@ -1,39 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HOA.Models;
+using HOA.Services.Interfaces;
+using HOA.Services;
 
 namespace HOA.Controllers
 {
     public class EventsController : Controller
     {
-        private readonly HOADbContext _context;
+        private IEventsService _eventsService;
 
-        public EventsController(HOADbContext context)
+        public EventsController(IEventsService eventsService)
         {
-            _context = context;
+            _eventsService = eventsService;
         }
 
         // GET: Events
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string searchQuery)
         {
-            return View(await _context.Events.ToListAsync());
+            ViewData["SearchQuery"] = searchQuery;
+            var events = string.IsNullOrEmpty(searchQuery)
+                ? _eventsService.GetAllEvents()
+                : _eventsService.SearchEventsByEventName(searchQuery);
+            return View(events);
         }
 
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var @event = _eventsService.GetEventById((int) id);
+
             if (@event == null)
             {
                 return NotFound();
@@ -53,12 +54,12 @@ namespace HOA.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImagePath,EventName,Description,Location,Date,Color")] Event @event)
+        public IActionResult Create([Bind("Id,ImagePath,EventName,Description,Location,Date,Color")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
+                _eventsService.AddEvent(@event);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(@event);
@@ -72,7 +73,8 @@ namespace HOA.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Events.FindAsync(id);
+            var @event = _eventsService.GetEventById((int) id);
+
             if (@event == null)
             {
                 return NotFound();
@@ -85,7 +87,7 @@ namespace HOA.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImagePath,EventName,Description,Location,Date,Color")] Event @event)
+        public IActionResult Edit(int id, [Bind("Id,ImagePath,EventName,Description,Location,Date,Color")] Event @event)
         {
             if (id != @event.Id)
             {
@@ -96,8 +98,7 @@ namespace HOA.Controllers
             {
                 try
                 {
-                    _context.Update(@event);
-                    await _context.SaveChangesAsync();
+                    _eventsService.UpdateEvent(@event);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,15 +117,15 @@ namespace HOA.Controllers
         }
 
         // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var @event = _eventsService.GetEventById((int) id);
+
             if (@event == null)
             {
                 return NotFound();
@@ -136,21 +137,21 @@ namespace HOA.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = _eventsService.GetEventById(id);
+
             if (@event != null)
             {
-                _context.Events.Remove(@event);
+                _eventsService.DeleteEvent(id);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return _eventsService.GetEventById(id) != null;
         }
     }
 }
