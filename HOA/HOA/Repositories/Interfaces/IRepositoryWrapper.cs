@@ -6,6 +6,7 @@
         IPaymentsRepository PaymentsRepository { get; }
         IMaintenanceRepository MaintenanceRepository { get; }
         IAnnouncementsRepository AnnouncementsRepository { get; }
+        IEventsRepository EventsRepository { get; }
 
         void Save();
     }
