@@ -33,14 +33,14 @@ namespace HOA.Controllers
                 return NotFound();
             }
 
-            var announcement = _announcementsService.GetAnnouncementsById((int)id);
+            var announcements = _announcementsService.GetAnnouncementsById((int)id);
 
-            if (announcement == null)
+            if (announcements == null)
             {
                 return NotFound();
             }
 
-            return View(announcement);
+            return View(announcements);
         }
 
         // GET: Announcements/Create
@@ -54,14 +54,14 @@ namespace HOA.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Title,Description,Date")] Announcement announcement)
+        public IActionResult Create([Bind("Id,Title,Description,Date")] Announcement announcements)
         {
             if (ModelState.IsValid)
             {
-                _announcementsService.AddAnnouncement(announcement);
+                _announcementsService.AddAnnouncement(announcements);
                 return RedirectToAction(nameof(Index));
             }
-            return View(announcement);
+            return View(announcements);
         }
 
         // GET: Announcements/Edit/5
@@ -72,13 +72,13 @@ namespace HOA.Controllers
                 return NotFound();
             }
 
-            var announcement = _announcementsService.GetAnnouncementsById((int)id);
+            var announcements = _announcementsService.GetAnnouncementsById((int)id);
             
-            if (announcement == null)
+            if (announcements == null)
             {
                 return NotFound();
             }
-            return View(announcement);
+            return View(announcements);
         }
 
         // POST: Announcements/Edit/5
@@ -86,9 +86,9 @@ namespace HOA.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,TaskName,AssignedPersonnel,Date")] Announcement announcement)
+        public IActionResult Edit(int id, [Bind("Id,TaskName,AssignedPersonnel,Date")] Announcement announcements)
         {
-            if (id != announcement.Id)
+            if (id != announcements.Id)
             {
                 return NotFound();
             }
@@ -97,11 +97,11 @@ namespace HOA.Controllers
             {
                 try
                 {
-                    _announcementsService.UpdateAnnouncement(announcement);
+                    _announcementsService.UpdateAnnouncement(announcements);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AnnouncementExists(announcement.Id))
+                    if (!AnnouncementExists(announcements.Id))
                     {
                         return NotFound();
                     }
@@ -112,7 +112,7 @@ namespace HOA.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(announcement);
+            return View(announcements);
         }
 
         // GET: Announcements/Delete/5
@@ -123,14 +123,14 @@ namespace HOA.Controllers
                 return NotFound();
             }
 
-            var announcement = _announcementsService.GetAnnouncementsById((int)id);
+            var announcements = _announcementsService.GetAnnouncementsById((int)id);
 
-            if (announcement == null)
+            if (announcements == null)
             {
                 return NotFound();
             }
 
-            return View(announcement);
+            return View(announcements);
         }
 
         // POST: Announcements/Delete/5
@@ -138,8 +138,8 @@ namespace HOA.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var announcement = _announcementsService.GetAnnouncementsById(id);
-            if (announcement != null)
+            var announcements = _announcementsService.GetAnnouncementsById(id);
+            if (announcements != null)
             {
                 _announcementsService.DeleteAnnouncement(id);
             }
