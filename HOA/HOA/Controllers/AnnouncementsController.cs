@@ -86,7 +86,7 @@ namespace HOA.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,TaskName,AssignedPersonnel,Date")] Announcement announcements)
+        public IActionResult Edit(int id, [Bind("Id,Title,Description,Date")] Announcement announcements)
         {
             if (id != announcements.Id)
             {
