@@ -1,4 +1,6 @@
-﻿@{
+﻿@model HOA.Models.Dashboard
+
+@{
     ViewData["Title"] = "HOA - Homepage";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -30,7 +32,7 @@
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Total Residents</h5>
-                        <p class="card-text display-6">150</p>
+                        <p class="card-text display-6">@Model.TotalResidents</p>
                     </div>
                 </div>
             </div>
@@ -38,7 +40,7 @@
                 <div class="card text-white bg-success mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Dues Collected</h5>
-                        <p class="card-text display-6">$75,000</p>
+                        <p class="card-text display-6">$@Model.TotalDuePayments</p>
                     </div>
                 </div>
             </div>
@@ -46,7 +48,7 @@
                 <div class="card text-white bg-warning mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Upcoming Events</h5>
-                        <p class="card-text display-6">3</p>
+                        <p class="card-text display-6">@Model.TotalEvents</p>
                     </div>
                 </div>
             </div>
@@ -56,18 +58,21 @@
             <div class="col">
                 <h2>Recent Announcements</h2>
                 <ul class="list-group">
-                    <li class="list-group-item">
-                        <strong>Board Meeting:</strong> Scheduled for March 15th at 7 PM.
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Pool Maintenance:</strong> Pool closed for cleaning on March 10th.
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Annual Dues Reminder:</strong> Due by March 31st.
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Spring Block Party:</strong> Join us on April 20th for food, fun, and games!
-                    </li>
+                    @if (Model.RecentAnnouncements != null && Model.RecentAnnouncements.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var item in Model.RecentAnnouncements)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@Html.DisplayFor(modelItem => item.Title)</strong> - @Html.DisplayFor(modelItem => item.Description)
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No recent announcements available.</p>
+                    }
                 </ul>
             </div>
         </div>

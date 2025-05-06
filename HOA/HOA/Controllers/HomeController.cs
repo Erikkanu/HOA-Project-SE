@@ -1,46 +1,23 @@
-using System.Diagnostics;
 using HOA.Models;
+using HOA.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HOA.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly HOADbContext _context;
+        private IDashboardService _dashboardService;
 
-        public HomeController(ILogger<HomeController> logger, HOADbContext context)
+        public HomeController(IDashboardService dashboardService)
         {
-            _logger = logger;
-            _context = context;
+            _dashboardService = dashboardService;
         }
 
         public IActionResult Index()
         {
-            return View(_context.Residents);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult AddResident()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AddResident(Resident resident)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Residents.Add(resident);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(resident);
+            Dashboard dashboard = _dashboardService.GetDashboardData();
+            return View(dashboard);
         }
     }
+
 }
