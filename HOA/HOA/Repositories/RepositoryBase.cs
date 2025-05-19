@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq.Expressions;
+using HOA.Data;
 using HOA.Models;
 using HOA.Repositories.Interfaces;
 
@@ -7,8 +8,8 @@ namespace HOA.Repositories
 {
     public abstract class RepositoryBase<T>: IRepositoryBase<T> where T : class
     {
-        protected HOADbContext _context { get; set; }
-        public RepositoryBase(HOADbContext repositoryContext)
+        protected HOAContext _context { get; set; }
+        public RepositoryBase(HOAContext repositoryContext)
         {
             _context = repositoryContext;
         }

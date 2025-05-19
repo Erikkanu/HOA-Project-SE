@@ -4,14 +4,23 @@ using HOA.Repositories.Interfaces;
 using HOA.Services;
 using HOA.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using HOA.Data;
+using Microsoft.AspNetCore.Identity;
+using HOA.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<HOADbContext>(options =>
+builder.Services.AddRazorPages();
+
+builder.Services.AddDefaultIdentity<HOAUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<HOAContext>();
+
+builder.Services.AddDbContext<HOAContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IResidentsService, ResidentsService>();
@@ -29,6 +38,26 @@ builder.Services.AddScoped<IEventsRepository, EventsRepository>();
 
 
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = false;
+    options.Password.RequiredUniqueChars = 6;
+
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+    options.Lockout.MaxFailedAccessAttempts = 10;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User Settings
+    options.User.RequireUniqueEmail = true;
+});
 
 var app = builder.Build();
 
@@ -51,5 +80,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");
+
+app.UseAuthentication();
+
+app.MapRazorPages();
 
 app.Run();
