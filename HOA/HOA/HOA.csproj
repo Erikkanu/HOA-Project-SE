@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Compile Include="..\HOA.Tests\Controllers\AnnouncementsControllerTests.cs" Link="AnnouncementsControllerTests.cs" />
+    <Compile Include="..\HOA.Tests\Services\DashboardServiceTests.cs" Link="DashboardServiceTests.cs" />
+    <Compile Include="..\HOA.Tests\Services\ResidentsServiceTests.cs" Link="ResidentsServiceTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
