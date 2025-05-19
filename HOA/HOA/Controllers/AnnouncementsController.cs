@@ -5,15 +5,9 @@ using HOA.Services.Interfaces;
 
 namespace HOA.Controllers
 {
-    public class AnnouncementsController : Controller
+    public class AnnouncementsController(IAnnouncementsService announcementsService) : Controller
     {
-        private IAnnouncementsService _announcementsService;
-
-
-        public AnnouncementsController(IAnnouncementsService announcementsService)
-        {
-            _announcementsService = announcementsService;
-        }
+        private readonly IAnnouncementsService _announcementsService = announcementsService;
 
         // GET: Announcements
         public IActionResult Index(string searchQuery)
