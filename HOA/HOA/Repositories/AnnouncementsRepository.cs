@@ -1,11 +1,12 @@
-﻿using HOA.Models;
+﻿using HOA.Data;
+using HOA.Models;
 using HOA.Repositories.Interfaces;
 
 namespace HOA.Repositories
 {
     public class AnnouncementsRepository: RepositoryBase<Announcement>, IAnnouncementsRepository
     {
-        public AnnouncementsRepository(HOADbContext repositoryContext)
+        public AnnouncementsRepository(HOAContext repositoryContext)
             : base(repositoryContext)
         {
         }

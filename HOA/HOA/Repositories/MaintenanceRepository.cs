@@ -1,11 +1,12 @@
-﻿using HOA.Models;
+﻿using HOA.Data;
+using HOA.Models;
 using HOA.Repositories.Interfaces;
 
 namespace HOA.Repositories
 {
     public class MaintenanceRepository: RepositoryBase<Maintenance>, IMaintenanceRepository
     {
-        public MaintenanceRepository(HOADbContext repositoryContext)
+        public MaintenanceRepository(HOAContext repositoryContext)
             : base(repositoryContext)
         {
         }

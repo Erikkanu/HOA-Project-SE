@@ -1,18 +1,19 @@
-﻿using HOA.Models;
+﻿using HOA.Data;
+using HOA.Models;
 using HOA.Repositories.Interfaces;
 
 namespace HOA.Repositories
 {
     public class RepositoryWrapper: IRepositoryWrapper
     {
-        private readonly HOADbContext _context;
+        private readonly HOAContext _context;
         private IResidentsRepository _residents;
         private IPaymentsRepository _payments;
         private IMaintenanceRepository _maintenance;
         private IAnnouncementsRepository _announcements;
         private IEventsRepository _events;
 
-        public RepositoryWrapper(HOADbContext context)
+        public RepositoryWrapper(HOAContext context)
         {
             _context = context;
         }
