@@ -5,14 +5,9 @@ using HOA.Services.Interfaces;
 
 namespace HOA.Controllers
 {
-    public class PaymentsController : Controller
+    public class PaymentsController(IPaymentsService paymentsService) : Controller
     {
-        private IPaymentsService _paymentsService;
-
-        public PaymentsController(IPaymentsService paymentsService)
-        {
-            _paymentsService = paymentsService;
-        }
+        private readonly IPaymentsService _paymentsService = paymentsService;
 
         // GET: Payments
         public IActionResult Index(string searchQuery)

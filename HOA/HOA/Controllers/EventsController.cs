@@ -5,14 +5,9 @@ using HOA.Services.Interfaces;
 
 namespace HOA.Controllers
 {
-    public class EventsController : Controller
+    public class EventsController(IEventsService eventsService) : Controller
     {
-        private IEventsService _eventsService;
-
-        public EventsController(IEventsService eventsService)
-        {
-            _eventsService = eventsService;
-        }
+        private readonly IEventsService _eventsService = eventsService;
 
         // GET: Events
         public IActionResult Index(string searchQuery)

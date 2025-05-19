@@ -3,13 +3,8 @@ using HOA.Models;
 
 namespace HOA.Models
 {
-    public class HOADbContext : DbContext
+    public class HOADbContext(DbContextOptions<HOADbContext> options) : DbContext(options)
     {
-        public HOADbContext(DbContextOptions<HOADbContext> options)
-            : base(options)
-        {
-        }
-
         public DbSet<Resident> Residents { get; set; } = default!;
 
         public DbSet<Payment> Payments { get; set; } = default!;
