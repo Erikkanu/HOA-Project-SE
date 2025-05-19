@@ -16,30 +16,30 @@ public class AnnouncementsControllerTests
     [Fact]
     public async Task Index_ReturnsAViewResult_WithAListOfAnnouncements()
     {
-        // Arrange
-        //var options = new DbContextOptionsBuilder<HOADbContext>()
-        //    .UseInMemoryDatabase(databaseName: "TestDb")
-        //    .Options;
+        //Arrange
+       var options = new DbContextOptionsBuilder<HOAContext>()
+           .UseInMemoryDatabase(databaseName: "TestDb")
+           .Options;
 
-        //using (var context = new HOADbContext(options))
-        //{
-        //    context.Announcements.Add(new Announcement { Id = 1, Title = "Test", Description = "Test Description", Date = "2024-01-01" });
-        //    context.SaveChanges();
-        //}
+        using (var context = new HOAContext(options))
+        {
+            context.Announcements.Add(new Announcement { Id = 1, Title = "Test", Description = "Test Description", Date = "2024-01-01" });
+            context.SaveChanges();
+        }
 
-        //using (var context = new HOAContext(options))
-        //{
-        //    var repositoryWrapper = new RepositoryWrapper(context); // Create the repository wrapper
-        //    var service = new AnnouncementsService(repositoryWrapper); // Pass repository wrapper to service
-        //    var controller = new AnnouncementsController(service);
+        using (var context = new HOAContext(options))
+        {
+            var repositoryWrapper = new RepositoryWrapper(context); // Create the repository wrapper
+            var service = new AnnouncementsService(repositoryWrapper); // Pass repository wrapper to service
+            var controller = new AnnouncementsController(service);
 
-        //    // Act
-        //    var result = controller.Index(null);
+            // Act
+            var result = controller.Index(null);
 
-        //    // Assert
-        //    var viewResult = Assert.IsType<ViewResult>(result);
-        //    var model = Assert.IsAssignableFrom<IEnumerable<Announcement>>(viewResult.Model);
-        //    Assert.Single(model);
-        //}
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsAssignableFrom<IEnumerable<Announcement>>(viewResult.Model);
+            Assert.Single(model);
+        }
     }
 }
